@@ -105,20 +105,20 @@ function git_rollback() {
 	fi
 }
 
-function git_remove_missing_files() {
-	about "git rm's missing files"
-	group 'git'
+# function git_remove_missing_files() {
+# 	about "git rm's missing files"
+# 	group 'git'
 
-	git ls-files -d -z | xargs -0 git update-index --remove
-}
+# 	git ls-files -d -z | xargs -0 git update-index --remove
+# }
 
 # Adds files to git's exclude file (same as .gitignore)
-function local-ignore() {
-	about 'adds file or path to git exclude file'
-	param '1: file or path fragment to ignore'
-	group 'git'
-	echo "$1" >> .git/info/exclude
-}
+# function local-ignore() {
+# 	about 'adds file or path to git exclude file'
+# 	param '1: file or path fragment to ignore'
+# 	group 'git'
+# 	echo "$1" >> .git/info/exclude
+# }
 
 # get a quick overview for your git repo
 function git_info() {
@@ -203,114 +203,114 @@ function git_stats {
 	fi
 }
 
-function gittowork() {
-	about 'Places the latest .gitignore file for a given project type in the current directory, or concatenates onto an existing .gitignore'
-	group 'git'
-	param '1: the language/type of the project, used for determining the contents of the .gitignore file'
-	example '$ gittowork java'
+# function gittowork() {
+# 	about 'Places the latest .gitignore file for a given project type in the current directory, or concatenates onto an existing .gitignore'
+# 	group 'git'
+# 	param '1: the language/type of the project, used for determining the contents of the .gitignore file'
+# 	example '$ gittowork java'
 
-	result=$(curl -L "https://www.gitignore.io/api/$1" 2> /dev/null)
+# 	result=$(curl -L "https://www.gitignore.io/api/$1" 2> /dev/null)
 
-	if [[ "${result}" =~ ERROR ]]; then
-		echo "Query '$1' has no match. See a list of possible queries with 'gittowork list'"
-	elif [[ $1 == list ]]; then
-		echo "${result}"
-	else
-		if [[ -f .gitignore ]]; then
-			result=$(grep -v "# Created by http://www.gitignore.io" <<< "${result}")
-			echo ".gitignore already exists, appending..."
-		fi
-		echo "${result}" >> .gitignore
-	fi
-}
+# 	if [[ "${result}" =~ ERROR ]]; then
+# 		echo "Query '$1' has no match. See a list of possible queries with 'gittowork list'"
+# 	elif [[ $1 == list ]]; then
+# 		echo "${result}"
+# 	else
+# 		if [[ -f .gitignore ]]; then
+# 			result=$(grep -v "# Created by http://www.gitignore.io" <<< "${result}")
+# 			echo ".gitignore already exists, appending..."
+# 		fi
+# 		echo "${result}" >> .gitignore
+# 	fi
+# }
 
-function gitignore-reload() {
-	about 'Empties the git cache, and readds all files not blacklisted by .gitignore'
-	group 'git'
-	example '$ gitignore-reload'
+# function gitignore-reload() {
+# 	about 'Empties the git cache, and readds all files not blacklisted by .gitignore'
+# 	group 'git'
+# 	example '$ gitignore-reload'
 
-	# The .gitignore file should not be reloaded if there are uncommited changes.
-	# Firstly, require a clean work tree. The function require_clean_work_tree()
-	# was stolen with love from https://www.spinics.net/lists/git/msg142043.html
+# 	# The .gitignore file should not be reloaded if there are uncommited changes.
+# 	# Firstly, require a clean work tree. The function require_clean_work_tree()
+# 	# was stolen with love from https://www.spinics.net/lists/git/msg142043.html
 
-	# Begin require_clean_work_tree()
+# 	# Begin require_clean_work_tree()
 
-	# Update the index
-	git update-index -q --ignore-submodules --refresh
-	err=0
+# 	# Update the index
+# 	git update-index -q --ignore-submodules --refresh
+# 	err=0
 
-	# Disallow unstaged changes in the working tree
-	if ! git diff-files --quiet --ignore-submodules --; then
-		echo >&2 "ERROR: Cannot reload .gitignore: Your index contains unstaged changes."
-		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
-		err=1
-	fi
+# 	# Disallow unstaged changes in the working tree
+# 	if ! git diff-files --quiet --ignore-submodules --; then
+# 		echo >&2 "ERROR: Cannot reload .gitignore: Your index contains unstaged changes."
+# 		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+# 		err=1
+# 	fi
 
-	# Disallow uncommited changes in the index
-	if ! git diff-index --cached --quiet HEAD --ignore-submodules; then
-		echo >&2 "ERROR: Cannot reload .gitignore: Your index contains uncommited changes."
-		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
-		err=1
-	fi
+# 	# Disallow uncommited changes in the index
+# 	if ! git diff-index --cached --quiet HEAD --ignore-submodules; then
+# 		echo >&2 "ERROR: Cannot reload .gitignore: Your index contains uncommited changes."
+# 		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+# 		err=1
+# 	fi
 
-	# Prompt user to commit or stash changes and exit
-	if [[ "${err}" == 1 ]]; then
-		echo >&2 "Please commit or stash them."
-	fi
+# 	# Prompt user to commit or stash changes and exit
+# 	if [[ "${err}" == 1 ]]; then
+# 		echo >&2 "Please commit or stash them."
+# 	fi
 
-	# End require_clean_work_tree()
+# 	# End require_clean_work_tree()
 
-	# If we're here, then there are no uncommited or unstaged changes dangling around.
-	# Proceed to reload .gitignore
-	if [[ "${err}" == 0 ]]; then
-		# Remove all cached files
-		git rm -r --cached .
+# 	# If we're here, then there are no uncommited or unstaged changes dangling around.
+# 	# Proceed to reload .gitignore
+# 	if [[ "${err}" == 0 ]]; then
+# 		# Remove all cached files
+# 		git rm -r --cached .
 
-		# Re-add everything. The changed .gitignore will be picked up here and will exclude the files
-		# now blacklisted by .gitignore
-		echo >&2 "Running git add ."
-		git add .
-		echo >&2 "Files readded. Commit your new changes now."
-	fi
-}
+# 		# Re-add everything. The changed .gitignore will be picked up here and will exclude the files
+# 		# now blacklisted by .gitignore
+# 		echo >&2 "Running git add ."
+# 		git add .
+# 		echo >&2 "Files readded. Commit your new changes now."
+# 	fi
+# }
 
-function git-changelog() {
-	# ---------------------------------------------------------------
-	#  ORIGINAL ANSWER: https://stackoverflow.com/a/2979587/10362396 |
-	# ---------------------------------------------------------------
-	about 'Creates the git changelog from one point to another by date'
-	group 'git'
-	example '$ git-changelog origin/master...origin/release [md|txt]'
+# function git-changelog() {
+# 	# ---------------------------------------------------------------
+# 	#  ORIGINAL ANSWER: https://stackoverflow.com/a/2979587/10362396 |
+# 	# ---------------------------------------------------------------
+# 	about 'Creates the git changelog from one point to another by date'
+# 	group 'git'
+# 	example '$ git-changelog origin/master...origin/release [md|txt]'
 
-	if [[ "$1" != *"..."* ]]; then
-		echo "Please include the valid 'diff' to make changelog"
-		return 1
-	fi
+# 	if [[ "$1" != *"..."* ]]; then
+# 		echo "Please include the valid 'diff' to make changelog"
+# 		return 1
+# 	fi
 
-	# shellcheck disable=SC2155
-	local NEXT=$(date +%F)
+# 	# shellcheck disable=SC2155
+# 	local NEXT=$(date +%F)
 
-	if [[ "$2" == "md" ]]; then
-		echo "# CHANGELOG $1"
+# 	if [[ "$2" == "md" ]]; then
+# 		echo "# CHANGELOG $1"
 
-		# shellcheck disable=SC2162
-		git log "$1" --no-merges --format="%cd" --date=short | sort -u -r | while read DATE; do
-			echo
-			echo "### ${DATE}"
-			git log --no-merges --format=" * (%h) %s by [%an](mailto:%ae)" --since="${DATE} 00:00:00" --until="${DATE} 24:00:00"
-			NEXT=${DATE}
-		done
-	else
-		echo "CHANGELOG $1"
-		echo ----------------------
+# 		# shellcheck disable=SC2162
+# 		git log "$1" --no-merges --format="%cd" --date=short | sort -u -r | while read DATE; do
+# 			echo
+# 			echo "### ${DATE}"
+# 			git log --no-merges --format=" * (%h) %s by [%an](mailto:%ae)" --since="${DATE} 00:00:00" --until="${DATE} 24:00:00"
+# 			NEXT=${DATE}
+# 		done
+# 	else
+# 		echo "CHANGELOG $1"
+# 		echo ----------------------
 
-		# shellcheck disable=SC2162
-		git log "$1" --no-merges --format="%cd" --date=short | sort -u -r | while read DATE; do
-			echo
-			echo "[${DATE}]"
-			git log --no-merges --format=" * (%h) %s by %an <%ae>" --since="${DATE} 00:00:00" --until="${DATE} 24:00:00"
-			# shellcheck disable=SC2034
-			NEXT=${DATE}
-		done
-	fi
-}
+# 		# shellcheck disable=SC2162
+# 		git log "$1" --no-merges --format="%cd" --date=short | sort -u -r | while read DATE; do
+# 			echo
+# 			echo "[${DATE}]"
+# 			git log --no-merges --format=" * (%h) %s by %an <%ae>" --since="${DATE} 00:00:00" --until="${DATE} 24:00:00"
+# 			# shellcheck disable=SC2034
+# 			NEXT=${DATE}
+# 		done
+# 	fi
+# }
