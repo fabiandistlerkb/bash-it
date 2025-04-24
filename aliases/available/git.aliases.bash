@@ -47,188 +47,181 @@ alias gcamd='git commit --amend'            # Amend the last commit interactivel
 #alias gci='git commit --interactive'        # Interactive commit
 #alias gcsam='git commit -S -am'             # Sign off and commit all changes with a message
 
+# Checkout branches or files
+alias gcb='git checkout -b'                 # Create and switch to a new branch
+alias gco='git checkout'                    # Switch branches or checkout files
+#alias gcobu='git checkout -b ${USER}/'      # Create a branch with the current username prefix
+alias gcom='git checkout $(get_default_branch)' # Switch to the default branch
+alias gcpd='git checkout $(get_default_branch); git pull; git branch -D' # Switch to default, pull updates, and delete current branch
+alias gct='git checkout --track'            # Checkout and track a remote branch
 
-# checkout
-alias gcb='git checkout -b'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcobu='git checkout -b ${USER}/'
-alias gcom='git checkout $(get_default_branch)'
-alias gcpd='git checkout $(get_default_branch); git pull; git branch -D'
-alias gct='git checkout --track'
+# Clone repositories
+alias gcl='git clone'                       # Clone a repository
 
-# clone
-alias gcl='git clone'
+# Clean the working directory
+alias gclean='git clean -fd'                # Remove untracked files and directories
 
-# clean
-alias gclean='git clean -fd'
+# Cherry-pick commits
+alias gcp='git cherry-pick'                 # Apply changes from a specific commit
+alias gcpx='git cherry-pick -x'             # Cherry-pick and add a reference to the original commit
 
-# cherry-pick
-alias gcp='git cherry-pick'
-alias gcpx='git cherry-pick -x'
+# View differences
+alias gd='git diff'                         # Show differences between working directory and index
+alias gds='git diff --staged'               # Show differences for staged changes
+alias gdt='git difftool'                    # Use a diff tool for comparisons
 
-# diff
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gdt='git difftool'
+# Export repository content
+alias gexport='git archive --format zip --output' # Create a zip archive of the repository or files
 
-# archive
-alias gexport='git archive --format zip --output'
+# Fetch updates from remote
+alias gf='git fetch --all --prune'          # Fetch all branches and prune deleted ones
+#alias gft='git fetch --all --prune --tags'  # Fetch branches, prune deleted, and include tags
+alias gftv='git fetch --all --prune --tags --verbose' # Fetch with verbose output
+#alias gfv='git fetch --all --prune --verbose' # Fetch with prune and verbose output
+alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/$(get_default_branch)' # Fetch and merge upstream changes
+alias gup='git fetch && git rebase'         # Fetch and rebase changes
 
-# fetch
-alias gf='git fetch --all --prune'
-alias gft='git fetch --all --prune --tags'
-alias gftv='git fetch --all --prune --tags --verbose'
-alias gfv='git fetch --all --prune --verbose'
-alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/$(get_default_branch)'
-alias gup='git fetch && git rebase'
+# View commit logs
+alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative' # Graphical log with custom format
+alias ggf='git log --graph --date=short --pretty=format:'\''%C(auto)%h %Cgreen%an%Creset %Cblue%cd%Creset %C(auto)%d %s'\''' # Graphical log with short date
+alias ggs='gg --stat'                       # Graphical log with statistics
+alias ggup='git log --branches --not --remotes --no-walk --decorate --oneline' # List branches with unpushed commits
+alias gll='git log --graph --pretty=oneline --abbrev-commit' # One-line graphical log
+alias gnew='git log HEAD@{1}..HEAD@{0}'     # Show new commits since the last pull
+alias gwc='git whatchanged'                 # Show file changes per commit
+#alias ghist='git log --pretty=format:'\''%h %ad | %s%d [%an]'\'' --graph --date=short' # Log history without colors
+alias gprogress='git log --pretty=format:'\''%C(yellow)%h %Cblue%ad %Creset%s%Cgreen [%cn] %Cred%d'\'' --decorate --date=short' # Log with progress details
 
-# log
-alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative'
-alias ggf='git log --graph --date=short --pretty=format:'\''%C(auto)%h %Cgreen%an%Creset %Cblue%cd%Creset %C(auto)%d %s'\'''
-alias ggs='gg --stat'
-alias ggup='git log --branches --not --remotes --no-walk --decorate --oneline' # FROM https://stackoverflow.com/questions/39220870/in-git-list-names-of-branches-with-unpushed-commits
-alias gll='git log --graph --pretty=oneline --abbrev-commit'
-alias gnew='git log HEAD@{1}..HEAD@{0}' # Show commits since last pull, see http://blogs.atlassian.com/2014/10/advanced-git-aliases/
-alias gwc='git whatchanged'
-alias ghist='git log --pretty=format:'\''%h %ad | %s%d [%an]'\'' --graph --date=short'                                          # Use it to be fast and without color.
-alias gprogress='git log --pretty=format:'\''%C(yellow)%h %Cblue%ad %Creset%s%Cgreen [%cn] %Cred%d'\'' --decorate --date=short' #Usually use "git progress" in the file .gitconfig. The new alias from Git friends will be truly welcome.
-
-# ls-files
+# List files
 alias gu='git ls-files . --exclude-standard --others' # Show untracked files
-alias glsut='gu'
-alias glsum='git diff --name-only --diff-filter=U' # Show unmerged (conflicted) files
+#alias glsut='gu'                       # Alias for `gu`
+alias glsum='git diff --name-only --diff-filter=U' # Show files with unresolved conflicts
 
-# gui
-alias ggui='git gui'
+# Git GUI
+#alias ggui='git gui'                   # Launch the Git GUI interface
 
-# home
-alias ghm='cd "$(git rev-parse --show-toplevel)"' # Git home
-# appendage to ghm
+# Navigate to repository root
+alias ghm='cd "$(git rev-parse --show-toplevel)"' # Go to Git repository root
 if ! _command_exists gh; then
-	alias gh='ghm'
+	alias gh='ghm'                 # Alias `gh` to `ghm` if `gh` is not a command
 fi
 
-# merge
-alias gm='git merge'
-alias gma='git merge --abort'
-alias gmc='git merge --continue'
-alias gms='git merge --squash'
+# Merge branches
+alias gm='git merge'                   # Merge branches
+alias gma='git merge --abort'          # Abort a merge
+alias gmc='git merge --continue'       # Continue a merge after conflicts are resolved
+#alias gms='git merge --squash'         # Squash merge changes
 
-# mv
-alias gmv='git mv'
+# Move or rename files
+alias gmv='git mv'                     # Move or rename files
 
-# patch
-alias gpatch='git format-patch -1'
+# Create patches
+alias gpatch='git format-patch -1'     # Create a patch for the last commit
 
-# push
-alias gp='git push'
-alias gpd='git push --delete'
-alias gpf='git push --force-with-lease'
-alias gpff='git push --force'
-alias gpo='git push origin HEAD'
-alias gpom='git push origin $(get_default_branch)'
-alias gpu='git push --set-upstream'
-alias gpunch='git push --force-with-lease'
-alias gpuo='git push --set-upstream origin'
-alias gpuoc='git push --set-upstream origin $(git symbolic-ref --short HEAD)'
+# Push changes to remote
+#alias gp='git push'                    # Push changes to the remote repository
+#alias gpd='git push --delete'          # Delete a remote branch
+#alias gpf='git push --force-with-lease' # Force push with safe options
+#alias gpff='git push --force'          # Force push (unsafe)
+#alias gpo='git push origin HEAD'       # Push the current branch to origin
+#alias gpom='git push origin $(get_default_branch)' # Push the default branch to origin
+#alias gpu='git push --set-upstream'    # Set upstream branch and push
+#alias gpunch='git push --force-with-lease' # Alias for `gpf`
+#alias gpuo='git push --set-upstream origin' # Set upstream to origin
+#alias gpuoc='git push --set-upstream origin $(git symbolic-ref --short HEAD)' # Set upstream for the current branch
 
-# pull
-alias gl='git pull'
-alias glp='git pull --prune'
-alias glum='git pull upstream $(get_default_branch)'
-alias gpl='git pull'
-alias gpp='git pull && git push'
-alias gpr='git pull --rebase'
+# Pull changes from remote
+alias gl='git pull'                    # Pull changes
+#alias glp='git pull --prune'           # Pull changes and prune deleted branches
+alias glum='git pull upstream $(get_default_branch)' # Pull changes from upstream
+alias gpl='git pull'                   # Alias for `gl`
+#alias gpp='git pull && git push'       # Pull and then push changes
+alias gpr='git pull --rebase'          # Pull with rebase
 
-# remote
-alias gr='git remote'
-alias gra='git remote add'
-alias grv='git remote -v'
+# Manage remote repositories
+alias gr='git remote'                  # Manage remotes
+alias gra='git remote add'             # Add a new remote
+alias grv='git remote -v'              # View remote URLs
 
-# rm
-alias grm='git rm'
-alias grmc='git rm --cached' # Removes the file only from the Git repository, but not from the filesystem. This is useful to undo some of the changes you made to a file before you commit it.
+# Remove files
+alias grm='git rm'                     # Remove files from the repository
+alias grmc='git rm --cached'           # Stop tracking files but keep them locally
 
-# rebase
-alias grb='git rebase'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-alias grbm='git rebase $(get_default_branch)'
-alias grbmi='git rebase $(get_default_branch) --interactive'
-alias grbma='GIT_SEQUENCE_EDITOR=: git rebase $(get_default_branch) --interactive --autosquash'
-alias gprom='git fetch origin $(get_default_branch) && git rebase origin/$(get_default_branch) && git update-ref refs/heads/$(get_default_branch) origin/$(get_default_branch)' # Rebase with latest remote
+# Rebase branches
+alias grb='git rebase'                 # Rebase the current branch
+alias grba='git rebase --abort'        # Abort a rebase
+alias grbc='git rebase --continue'     # Continue a rebase
+alias grbm='git rebase $(get_default_branch)' # Rebase onto the default branch
+alias grbmi='git rebase $(get_default_branch) --interactive' # Interactive rebase onto the default branch
+#alias grbma='GIT_SEQUENCE_EDITOR=: git rebase $(get_default_branch) --interactive --autosquash' # Auto-squash rebase onto the default branch
+#alias gprom='git fetch origin $(get_default_branch) && git rebase origin/$(get_default_branch) && git update-ref refs/heads/$(get_default_branch) origin/$(get_default_branch)' # Rebase with latest remote changes
 
-# reset
-alias gus='git reset HEAD' # read as: 'git unstage'
-alias grh='git reset'      # equivalent to: git reset HEAD
-alias grh!='git reset --hard'
-alias gpristine='git reset --hard && git clean -dfx'
+# Reset changes
+alias gus='git reset HEAD~1'             # Unstage changes
+#alias grh='git reset'                  # Reset changes (soft or mixed)
+#alias grh!='git reset --hard'          # Hard reset changes
+#alias gpristine='git reset --hard && git clean -dfx' # Completely clean the working directory
 
-# status
-alias gs='git status'
-alias gss='git status -s'
+# Show repository status
+alias gs='git status'                  # Show the status
+alias gss='git status -s'              # Show a short status
 
-# shortlog
-alias gcount='git shortlog -sn'
-alias gsl='git shortlog -sn'
+# Shortlog
+alias gcount='git shortlog -sn'        # Show commit counts by author
+alias gsl='git shortlog -sn'           # Alias for `gcount`
 
-# show
-alias gsh='git show'
-alias gshn='git show --name-only'
-alias gshns='git show --name-status'
+# Show commit or object details
+#alias gsh='git show'                   # Show details of a commit or object
+#alias gshn='git show --name-only'      # Show names of changed files
+#alias gshns='git show --name-status'   # Show names and statuses of changed files
 
-# svn
-alias gsd='git svn dcommit'
-alias gsr='git svn rebase' # Git SVN
+# SVN integration
+#alias gsd='git svn dcommit'            # Commit changes to SVN
+#alias gsr='git svn rebase'             # Rebase changes from SVN
 
-# stash
-alias gst='git stash'
-alias gstb='git stash branch'
-alias gstd='git stash drop'
-alias gstl='git stash list'
-alias gstp='git stash pop'  # kept due to long-standing usage
-alias gstpo='git stash pop' # recommended for it's symmetry with gstpu (push)
+# Stash changes
+alias gst='git stash'                  # Stash changes
+alias gstb='git stash branch'          # Create a branch from stash
+alias gstd='git stash drop'            # Drop a stash entry
+alias gstl='git stash list'            # List all stashes
+alias gstp='git stash pop'             # Apply and remove the latest stash
+alias gstpo='git stash pop'            # Alias for `gstp`
+alias gstpu='git stash push'           # Push changes to the stash
+alias gstpum='git stash push -m'       # Push changes with a message
+alias gsts='git stash push'            # Alias for `gstpu`
+alias gstsm='git stash push -m'        # Alias for `gstpum`
 
-## 'stash push' introduced in git v2.13.2
-alias gstpu='git stash push'
-alias gstpum='git stash push -m'
+# Submodule management
+alias gsu='git submodule update --init --recursive' # Update and initialize submodules recursively
 
-## 'stash save' deprecated since git v2.16.0, alias is now push
-alias gsts='git stash push'
-alias gstsm='git stash push -m'
+# Switch branches (Git v2.23+)
+alias gsw='git switch'                 # Switch branches
+alias gswc='git switch --create'       # Create and switch to a new branch
+alias gswm='git switch $(get_default_branch)' # Switch to the default branch
+alias gswt='git switch --track'        # Switch to and track a remote branch
 
-# submodules
-alias gsu='git submodule update --init --recursive'
+# Manage tags
+alias gt='git tag'                     # Manage tags
+alias gta='git tag -a'                 # Create an annotated tag
+alias gtd='git tag -d'                 # Delete a tag
+alias gtl='git tag -l'                 # List tags
 
-# switch
-# these aliases requires git v2.23+
-alias gsw='git switch'
-alias gswc='git switch --create'
-alias gswm='git switch $(get_default_branch)'
-alias gswt='git switch --track'
-
-# tag
-alias gt='git tag'
-alias gta='git tag -a'
-alias gtd='git tag -d'
-alias gtl='git tag -l'
-
+# OS-specific tag sorting
 case $OSTYPE in
 	darwin*)
-		alias gtls="git tag -l | gsort -V"
+		alias gtls="git tag -l | gsort -V" # MacOS: Sort tags using `gsort`
 		;;
 	*)
-		alias gtls='git tag -l | sort -V'
+		alias gtls='git tag -l | sort -V'  # Other OS: Sort tags using `sort`
 		;;
 esac
 
-# functions
+# Functions
 function gdv() {
-	git diff --ignore-all-space "$@" | vim -R -
+	git diff --ignore-all-space "$@" | nano -R - # Show diff ignoring all spaces in nano (read-only)
 }
 
 function get_default_branch() {
 	branch=$(git symbolic-ref refs/remotes/origin/HEAD)
-	${branch#refs/remotes/origin/}
+	${branch#refs/remotes/origin/} # Get the default branch name of the repository
 }
