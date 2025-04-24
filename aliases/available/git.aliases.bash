@@ -68,7 +68,7 @@ alias gcpx='git cherry-pick -x'             # Cherry-pick and add a reference to
 # View differences
 alias gd='git diff'                         # Show differences between working directory and index
 alias gds='git diff --staged'               # Show differences for staged changes
-alias gdt='git difftool'                    # Use a diff tool for comparisons
+#alias gdt='git difftool'                    # Use a diff tool for comparisons
 
 # Export repository content
 alias gexport='git archive --format zip --output' # Create a zip archive of the repository or files
@@ -82,20 +82,20 @@ alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/$(get_
 alias gup='git fetch && git rebase'         # Fetch and rebase changes
 
 # View commit logs
-alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative' # Graphical log with custom format
+#alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative' # Graphical log with custom format
 alias ggf='git log --graph --date=short --pretty=format:'\''%C(auto)%h %Cgreen%an%Creset %Cblue%cd%Creset %C(auto)%d %s'\''' # Graphical log with short date
-alias ggs='gg --stat'                       # Graphical log with statistics
-alias ggup='git log --branches --not --remotes --no-walk --decorate --oneline' # List branches with unpushed commits
-alias gll='git log --graph --pretty=oneline --abbrev-commit' # One-line graphical log
-alias gnew='git log HEAD@{1}..HEAD@{0}'     # Show new commits since the last pull
-alias gwc='git whatchanged'                 # Show file changes per commit
+#alias ggs='gg --stat'                       # Graphical log with statistics
+#alias ggup='git log --branches --not --remotes --no-walk --decorate --oneline' # List branches with unpushed commits
+#alias gll='git log --graph --pretty=oneline --abbrev-commit' # One-line graphical log
+#alias gnew='git log HEAD@{1}..HEAD@{0}'     # Show new commits since the last pull
+#alias gwc='git whatchanged'                 # Show file changes per commit
 #alias ghist='git log --pretty=format:'\''%h %ad | %s%d [%an]'\'' --graph --date=short' # Log history without colors
 alias gprogress='git log --pretty=format:'\''%C(yellow)%h %Cblue%ad %Creset%s%Cgreen [%cn] %Cred%d'\'' --decorate --date=short' # Log with progress details
 
 # List files
-alias gu='git ls-files . --exclude-standard --others' # Show untracked files
+#alias gu='git ls-files . --exclude-standard --others' # Show untracked files
 #alias glsut='gu'                       # Alias for `gu`
-alias glsum='git diff --name-only --diff-filter=U' # Show files with unresolved conflicts
+#alias glsum='git diff --name-only --diff-filter=U' # Show files with unresolved conflicts
 
 # Git GUI
 #alias ggui='git gui'                   # Launch the Git GUI interface
@@ -148,10 +148,10 @@ alias grm='git rm'                     # Remove files from the repository
 alias grmc='git rm --cached'           # Stop tracking files but keep them locally
 
 # Rebase branches
-alias grb='git rebase'                 # Rebase the current branch
-alias grba='git rebase --abort'        # Abort a rebase
-alias grbc='git rebase --continue'     # Continue a rebase
-alias grbm='git rebase $(get_default_branch)' # Rebase onto the default branch
+#alias grb='git rebase'                 # Rebase the current branch
+#alias grba='git rebase --abort'        # Abort a rebase
+#alias grbc='git rebase --continue'     # Continue a rebase
+#alias grbm='git rebase $(get_default_branch)' # Rebase onto the default branch
 alias grbmi='git rebase $(get_default_branch) --interactive' # Interactive rebase onto the default branch
 #alias grbma='GIT_SEQUENCE_EDITOR=: git rebase $(get_default_branch) --interactive --autosquash' # Auto-squash rebase onto the default branch
 #alias gprom='git fetch origin $(get_default_branch) && git rebase origin/$(get_default_branch) && git update-ref refs/heads/$(get_default_branch) origin/$(get_default_branch)' # Rebase with latest remote changes
