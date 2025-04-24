@@ -35,41 +35,41 @@ function myip() {
 	echo -e "Your public IP is: ${echo_bold_green-} $res ${echo_normal-}"
 }
 
-function pickfrom() {
-	about 'picks random line from file'
-	param '1: filename'
-	example '$ pickfrom /usr/share/dict/words'
-	group 'base'
-	local file=${1:-}
-	local -i n=0 length
-	if [[ ! -r "$file" ]]; then
-		reference "${FUNCNAME[0]}" && return
-	fi
-	length="$(wc -l < "$file")"
-	n=$((RANDOM * length / 32768 + 1))
-	head -n "$n" "$file" | tail -1
-}
+#function pickfrom() {
+#	about 'picks random line from file'
+#	param '1: filename'
+#	example '$ pickfrom /usr/share/dict/words'
+#	group 'base'
+#	local file=${1:-}
+#	local -i n=0 length
+#	if [[ ! -r "$file" ]]; then
+#		reference "${FUNCNAME[0]}" && return
+#	fi
+#	length="$(wc -l < "$file")"
+#	n=$((RANDOM * length / 32768 + 1))
+#	head -n "$n" "$file" | tail -1
+#}
 
-function passgen() {
-	about 'generates random password from dictionary words'
-	param 'optional integer length'
-	param 'if unset, defaults to 4'
-	example '$ passgen'
-	example '$ passgen 6'
-	group 'base'
-	local -i i length=${1:-4}
-	local pass
-	# shellcheck disable=SC2034
-	pass="$(for i in $(eval "echo {1..$length}"); do pickfrom /usr/share/dict/words; done)"
-	echo "With spaces (easier to memorize): ${pass//$'\n'/ }"
-	echo "Without spaces (easier to brute force): ${pass//$'\n'/}"
-}
+#function passgen() {
+#	about 'generates random password from dictionary words'
+#	param 'optional integer length'
+#	param 'if unset, defaults to 4'
+#	example '$ passgen'
+#	example '$ passgen 6'
+#	group 'base'
+#	local -i i length=${1:-4}
+#	local pass
+#	# shellcheck disable=SC2034
+#	pass="$(for i in $(eval "echo {1..$length}"); do pickfrom /usr/share/dict/words; done)"
+#	echo "With spaces (easier to memorize): ${pass//$'\n'/ }"
+#	echo "Without spaces (easier to brute force): ${pass//$'\n'/}"
+#}
 
 # Create alias pass to passgen when pass isn't installed or
 # BASH_IT_LEGACY_PASS is true.
-if ! _command_exists pass || [[ "${BASH_IT_LEGACY_PASS:-}" == true ]]; then
-	alias pass=passgen
-fi
+#if ! _command_exists pass || [[ "${BASH_IT_LEGACY_PASS:-}" == true ]]; then
+#	alias pass=passgen
+#fi
 
 if _command_exists markdown && _command_exists browser; then
 	function pmdown() {
@@ -120,26 +120,26 @@ function usage() {
 	esac
 }
 
-function t() {
-	about 'todo.sh if available, otherwise one thing todo'
-	param 'if not set, display todo item'
-	param '1: todo text'
+# function t() {
+# 	about 'todo.sh if available, otherwise one thing todo'
+# 	param 'if not set, display todo item'
+# 	param '1: todo text'
 
-	local todotxt="${XDG_STATE_HOME:-~/.local/state}/bash_it/todo.txt"
+# 	local todotxt="${XDG_STATE_HOME:-~/.local/state}/bash_it/todo.txt"
 
-	if _bash-it-component-item-is-enabled plugin todo; then
-		todo.sh "$@"
-		return
-	elif [[ ! -f "${todotxt}" && -f ~/.t ]]; then
-		mv -vn ~/.t "${todotxt}" # Verbose, so the user knows. Don't overwrite, just in case.
-	fi
+# 	if _bash-it-component-item-is-enabled plugin todo; then
+# 		todo.sh "$@"
+# 		return
+# 	elif [[ ! -f "${todotxt}" && -f ~/.t ]]; then
+# 		mv -vn ~/.t "${todotxt}" # Verbose, so the user knows. Don't overwrite, just in case.
+# 	fi
 
-	if [[ "$#" -eq 0 ]]; then
-		cat "${todotxt}"
-	else
-		echo "$@" >| "${todotxt}"
-	fi
-}
+# 	if [[ "$#" -eq 0 ]]; then
+# 		cat "${todotxt}"
+# 	else
+# 		echo "$@" >| "${todotxt}"
+# 	fi
+# }
 
 if _command_exists mkisofs; then
 	function mkiso() {
