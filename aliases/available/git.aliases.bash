@@ -35,17 +35,18 @@ alias gbm='git branch --move'
 #alias gbc='git for-each-ref --format="%(authorname) %09 %(if)%(HEAD)%(then)*%(else)%(refname:short)%(end) %09 %(creatordate)" refs/remotes/ --sort=authorname DESC' # FROM https://stackoverflow.com/a/58623139/10362396
 
 # commit
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gcaa='git commit -a --amend -C HEAD' # Add uncommitted and unstaged changes to the last commit
-alias gcam='git commit -v -am'
-alias gcamd='git commit --amend'
-alias gc!='git commit -v --amend'
-alias gca!='git commit -v -a --amend'
-alias gcn!='git commit -v --amend --no-edit'
-alias gcm='git commit -v -m'
-alias gci='git commit --interactive'
-alias gcsam='git commit -S -am'
+alias gc='git commit -v'                    # Commit with verbose output
+alias gca='git commit -v -a'                # Commit all changes with verbose output
+#alias gcaa='git commit -a --amend -C HEAD'  # Amend the last commit with uncommitted changes
+alias gcam='git commit -v -am'              # Commit all changes with a message
+alias gcamd='git commit --amend'            # Amend the last commit interactively
+#alias gc!='git commit -v --amend'           # Amend the last commit with verbose output
+#alias gca!='git commit -v -a --amend'       # Amend the last commit with all changes and verbose output
+#alias gcn!='git commit -v --amend --no-edit' # Amend the last commit without editing the message
+#alias gcm='git commit -v -m'                # Commit with a message
+#alias gci='git commit --interactive'        # Interactive commit
+#alias gcsam='git commit -S -am'             # Sign off and commit all changes with a message
+
 
 # checkout
 alias gcb='git checkout -b'
