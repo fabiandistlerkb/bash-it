@@ -8,8 +8,8 @@ alias got='git '
 # add
 alias ga='git add'
 alias gall='git add -A'
-alias gap='git add -p'
-alias gav='git add -v'
+#alias gap='git add -p'
+#alias gav='git add -v'
 
 # branch
 alias gb='git branch'
