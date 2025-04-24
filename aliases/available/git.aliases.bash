@@ -13,18 +13,26 @@ alias gall='git add -A'
 
 # branch
 alias gb='git branch'
+# List all branches (local and remote)
 alias gba='git branch --all'
+# Delete a local branch (only if it has been merged)
 alias gbd='git branch -d'
+# Force delete a local branch (even if it hasn't been merged)
 alias gbD='git branch -D'
-alias gbl='git branch --list'
-alias gbla='git branch --list --all'
-alias gblr='git branch --list --remotes'
+# List all local branches
+#alias gbl='git branch --list'
+# List all branches (local and remote)
+#alias gbla='git branch --list --all'
+# List all remote branches
+#alias gblr='git branch --list --remotes'
+# Rename a branch
 alias gbm='git branch --move'
-alias gbr='git branch --remotes'
-alias gbt='git branch --track'
-
+# List all remote branches (duplicate of gblr for convenience)
+#alias gbr='git branch --remotes'
+# Create a new branch that tracks a specified remote branch
+#alias gbt='git branch --track'
 # for-each-ref
-alias gbc='git for-each-ref --format="%(authorname) %09 %(if)%(HEAD)%(then)*%(else)%(refname:short)%(end) %09 %(creatordate)" refs/remotes/ --sort=authorname DESC' # FROM https://stackoverflow.com/a/58623139/10362396
+#alias gbc='git for-each-ref --format="%(authorname) %09 %(if)%(HEAD)%(then)*%(else)%(refname:short)%(end) %09 %(creatordate)" refs/remotes/ --sort=authorname DESC' # FROM https://stackoverflow.com/a/58623139/10362396
 
 # commit
 alias gc='git commit -v'
