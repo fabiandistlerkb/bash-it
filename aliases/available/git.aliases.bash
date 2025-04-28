@@ -78,8 +78,8 @@ alias gf='git fetch --all --prune'          # Fetch all branches and prune delet
 #alias gft='git fetch --all --prune --tags'  # Fetch branches, prune deleted, and include tags
 alias gftv='git fetch --all --prune --tags --verbose' # Fetch with verbose output
 #alias gfv='git fetch --all --prune --verbose' # Fetch with prune and verbose output
-alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/$(get_default_branch)' # Fetch and merge upstream changes
-alias gup='git fetch && git rebase'         # Fetch and rebase changes
+#alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/$(get_default_branch)' # Fetch and merge upstream changes
+#alias gup='git fetch && git rebase'         # Fetch and rebase changes
 
 # View commit logs
 #alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative' # Graphical log with custom format
