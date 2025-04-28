@@ -152,7 +152,7 @@ alias grmc='git rm --cached'           # Stop tracking files but keep them local
 #alias grba='git rebase --abort'        # Abort a rebase
 #alias grbc='git rebase --continue'     # Continue a rebase
 #alias grbm='git rebase $(get_default_branch)' # Rebase onto the default branch
-alias grbmi='git rebase $(get_default_branch) --interactive' # Interactive rebase onto the default branch
+#alias grbmi='git rebase $(get_default_branch) --interactive' # Interactive rebase onto the default branch
 #alias grbma='GIT_SEQUENCE_EDITOR=: git rebase $(get_default_branch) --interactive --autosquash' # Auto-squash rebase onto the default branch
 #alias gprom='git fetch origin $(get_default_branch) && git rebase origin/$(get_default_branch) && git update-ref refs/heads/$(get_default_branch) origin/$(get_default_branch)' # Rebase with latest remote changes
 
